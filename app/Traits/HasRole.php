@@ -11,4 +11,19 @@ trait HasRole
     {
         return $this->BelongsToMany(Role::class, 'role_user');
     }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
+
+    public function isPartner()
+    {
+        return $this->hasRole('partner');
+    }
+
+    public function hasRole($roleName): bool
+    {
+        return $this->roles()->where('name', $roleName)->exists();
+    }
 }
