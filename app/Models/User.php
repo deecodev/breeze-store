@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Traits\HasRole;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -51,5 +52,13 @@ class User extends Authenticatable
     public function stores()
     {
         return $this->hasMany(Store::class);
+    }
+
+    public function scopeFilter(Builder $query, $filter)
+    {
+        $query->when(
+            $filter ??= false,
+            fn($query) => $query->where('name', 'like', '%' . $filter . '%')->orWhere('email', 'like', '%' . $filter . '%')
+        );
     }
 }
