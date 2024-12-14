@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\CartStatus;
+use App\Enums\CategoryProduct;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,10 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->enum('status', ['active', 'checkout', 'completed'])->default(CartStatus::ACTIVE->value);
+            $table->enum('name', ['All', 'Man', 'Women', 'Kids']);
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('categories');
     }
 };

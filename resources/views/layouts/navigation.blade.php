@@ -30,9 +30,7 @@
                                 class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
                                 placeholder="Search...">
                         </div>
-                        <x-cart></x-cart>
                     </div>
-
                 </div>
             </div>
 
@@ -138,10 +136,6 @@
         </div>
 
         <div class="space-y-1 py-2 border-t border-gray-200">
-            <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
-                {{ __('Cart') }}
-            </x-responsive-nav-link>
-
             <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
                 {{ __('Product') }}
             </x-responsive-nav-link>
