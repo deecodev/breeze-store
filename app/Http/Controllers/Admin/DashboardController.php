@@ -12,24 +12,32 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        // Mengambil data pengguna, toko, dan produk dengan cara yang lebih efisien
+        $users = User::count(); // Menghitung jumlah pengguna
+        $stores = Store::count(); // Menghitung jumlah toko
+        $products = Product::count(); // Menghitung jumlah produk
+
+        return view('admin.dashboard', compact('users', 'stores', 'products'));
     }
 
     public function users()
     {
-        // $users = User::latest()->with('stores')->get();
-        return view('admin.users');
+        // Mengambil data pengguna terbaru dengan relasi 'stores'
+        $users = User::latest()->select('id', 'name', 'email')->with('stores')->get();
+        return view('admin.users', compact('users'));
     }
 
     public function stores()
     {
-        // $stores = Store::latest()->with('products')->get();
-        return view('admin.stores');
+        // Mengambil data toko terbaru dengan relasi 'products'
+        $stores = Store::latest()->with('products')->get();
+        return view('admin.stores', compact('stores'));
     }
 
     public function products()
     {
+        // Mengambil data produk terbaru dengan relasi 'category'
         $products = Product::latest()->with('category')->get();
-        return view('admin.products');
+        return view('admin.products', compact('products'));
     }
 }
